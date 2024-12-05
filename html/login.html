@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BiteShare Login</title>
+    <link rel="stylesheet" href="/css/login.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+  </head>
+  <body>
+    <div class="header-bar"></div>
+
+    <div class="container">
+      <div class="left-side">
+        <img src="/logo/bitesharetextgreen.png" alt="BiteShare" class="logo" />
+        <p class="tagline">
+          Connect to see Inspiration and Discovery of foods from your friends.
+        </p>
+      </div>
+
+      <div class="right-side">
+        <div class="login-card">
+          <div class="logo-circle">
+            <span><img src="/logo/BiteShareLogo.png" alt="logo" width="40" /></span>
+          </div>
+
+          <form class="login-form">
+            <input
+              type="text"
+              id="login-username"
+              placeholder="Phone number, Username or Email"
+            />
+            <input type="password" id="login-password" placeholder="Password" />
+
+            <div class="remember-forgot">
+              <div class="remember">
+                <input type="checkbox" id="remember" />
+                <label for="remember">Remember me</label>
+              </div>
+              <a href="#" class="forgot-link">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="login-button">
+              <strong>Log In</strong>
+            </button>
+
+            <div class="divider">
+              <span>Or Continue with</span>
+            </div>
+
+            <div class="mb-3 social-btn-contain">
+              <div class="social-btn">
+                  <button class="btn btn-outline-primary" id="facebookBtn"><i class="fab fa-facebook"></i>
+                      Facebook</button>
+              </div>
+              <div class="social-btn">
+                <button class="btn btn-outline-dark" id="googleBtn">
+                  <i class="fab fa-google"></i> Google
+                </button>
+              </div>
+          </div>
+          </form>
+        </div>
+
+        <div class="signup-card">
+          <span>Don't have an account? </span>
+          <a href="/html/signup.html" class="signup-link"><strong>Sign Up Now</strong></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Load our JavaScript after Firebase and Google SDKs -->
+    <script type="module" src="/scripts/facebook-login.js" defer></script>
+    <script type="module" src="/scripts/gmail-login.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BiteShare Profile</title>
+    <link rel="stylesheet" href="/css/profile.css" />
+    <link rel="stylesheet" href="/css/editprofile.css">
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-left">
+        <div class="logo">
+          <img src="/logo/BiteShareLogo.png" alt="BiteShareLogo" width="30" />
+        </div>
+        <input type="search" placeholder="Search..." class="search-input" />
+      </div>
+      <div class="nav-right">
+        <a href="#" class="nav-icon home-icon"
+          ><img src="/icons/homeicon.png" alt="home" width="30"
+        /></a>
+        <a href="#" class="nav-icon compass-icon"
+          ><img src="/icons/discovericon.png" alt="discover" width="30"
+        /></a>
+        <a href="#" class="nav-icon messages-icon"
+          ><img src="/icons/messageicon.png" alt="message" width="30"
+        /></a>
+        <a href="#" class="nav-icon notifications-icon"
+          ><img src="/icons/notificon.png" alt="notification" width="30"
+        /></a>
+        <a href="/html/profile.html" class="nav-icon profile-icon active"
+          ><img src="/icons/profileicon.png" alt="profile" width="30"
+        /></a>
+      </div>
+    </nav>
+    
+    <div class="container">
+      <div class="main-content">
+          <h1>Edit Profile</h1>
+          <div class="profile-card">
+              <div class="profile-photo">
+                  <div class="avatar">
+                      <img id="avatar-img" src="/icons/Profilepic.png" alt="Profile">
+                  </div>
+                  <div class="profile-info">
+                      <span class="username">BiteShare</span>
+                      <span class="handle">@biteshare</span>
+                  </div>
+                  <button class="change-photo-btn">Change Photo</button>
+              </div>
+
+              <form id="profile-form" class="profile-form">
+                  <div class="form-group">
+                      <label for="website">Website</label>
+                      <input type="url" id="website" placeholder="Enter your website URL">
+                  </div>
+
+                  <div class="form-group">
+                      <label for="bio">Bio</label>
+                      <textarea id="bio" placeholder="Tell us about yourself"></textarea>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="gender">Gender</label>
+                      <select id="gender">
+                          <option value="">Select your gender</option>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                          <option value="other">Other</option>
+                          <option value="prefer-not-to-say">Prefer not to say</option>
+                      </select>
+                  </div>
+              </form>
+          </div>
+      </div>
+
+      <div class="sidebar">
+          <settingsnav>
+              <button class="abovesidebar-btn">Settings</button>
+              <button class="sidebar-btn">Edit Profile</button>
+              <button class="sidebar-btn">Account Privacy</button>
+              <button class="sidebar-btn">Blocked</button>
+              <button class="sidebar-btn">Activity Log</button>
+              <button class="sidebar-btn">Terms and Service</button>
+              <button class="sidebar-btn">Cookies Policy</button>
+              <button class="sidebar-btn">Privacy Policy</button>
+              <button class="sidebar-btn">Community Standard</button>
+          </settingsnav>
+          <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+  </div>
+  <script src="/scripts/editprofile.js"></script>
+  <script>
+
+    function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            localStorage.removeItem('loginType');
+            window.location.href = '/html/login.html';
+        }
+  </script>
+  </body>
+</html>

@@ -1,0 +1,256 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: #f2e8cf;
+  min-height: 100vh;
+}
+
+.header-bar {
+  width: 100%;
+  height: 48px;
+  background-color: #8ab660;
+}
+
+/* Container Layout */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  gap: 2rem;
+}
+
+.left-side {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.logo {
+  width: 300px;
+  margin-bottom: 1rem;
+}
+
+.tagline {
+  color: #8ab660;
+  font-size: 1.125rem;
+}
+
+.right-side {
+  width: 85%;
+  max-width: 400px;
+}
+
+/* Login Card */
+.login-card {
+  background-color: #2a2b2a;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  margin-bottom: 1rem;
+}
+
+.logo-circle {
+  width: 4rem;
+  height: 4rem;
+  background-color: #4a4a4a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.logo-circle span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  background-color: #4a4a4a;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+/* Form and Input Styles */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+input[type="text"],
+input[type="password"] {
+  background-color: #4a4a4a;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  color: white;
+  width: 100%;
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+  color: #9ca3af;
+}
+
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.remember label,
+.forgot-link {
+  color: white;
+  font-size: 0.875rem;
+}
+
+.forgot-link {
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* Login Button */
+.login-button {
+  background-color: #f5efe6;
+  color: #8ab660;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.login-button:hover {
+  background-color: #e5dfd6;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 0.875rem;
+  gap: 1rem;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #4a4a4a;
+}
+
+/* Social Button Styling */
+.social-btn button {
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* Google Button (White) */
+.btn-outline-dark {
+  background-color: white !important; /* Permanent white background */
+  color: black !important; /* Permanent black text */
+  border: 1px solid #d9d9d9 !important; /* Light gray border */
+  cursor: pointer; /* Pointer cursor for buttons */
+}
+
+.btn-outline-dark:hover,
+.btn-outline-dark:focus,
+.btn-outline-dark:active {
+  background-color: white !important;
+  color: black !important;
+  border: 1px solid #d9d9d9 !important;
+}
+
+/* Facebook Button (Blue) */
+.btn-outline-primary {
+  background-color: #1877F2 !important; /* Permanent Facebook blue */
+  color: white !important; /* Permanent white text */
+  border: none !important; /* Remove border */
+  cursor: pointer; /* Pointer cursor for buttons */
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active {
+  background-color: #1877F2 !important;
+  color: white !important;
+  border: none !important;
+}
+
+/* Social Button Container */
+.social-btn-contain {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px; /* Adds spacing between buttons */
+}
+
+.social-btn {
+  flex: 1; /* Makes buttons equal width */
+}
+
+/* Signup Card */
+.signup-card {
+  background-color: #2a2b2a;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+  color: white;
+  margin-top: -0.7rem;
+}
+
+.signup-link {
+  color: #8ab660;
+  text-decoration: none;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+}
+
+/* Media Queries for Responsiveness */
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+    justify-content: center;
+    padding: 2rem;
+    min-height: calc(100vh - 48px);
+  }
+
+  .left-side {
+    width: 50%;
+    text-align: left;
+    padding-right: 2rem;
+  }
+
+  .logo {
+    margin-left: 0;
+  }
+}

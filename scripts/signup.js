@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
       // Simulate signup process
       alert(`Signup successful! Welcome, ${fullName}`);
-      window.location.href = "home.html"; // Redirect to home page
+      window.location.href = "/html/profile.html"; // Redirect to home page
     });
   
     // Function to validate email

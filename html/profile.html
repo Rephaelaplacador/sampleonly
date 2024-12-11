@@ -29,7 +29,7 @@
         <a href="#" class="nav-icon home-icon"
           ><img src="/icons/homeicon.png" alt="home" width="30"
         /></a>
-        <a href="#" class="nav-icon compass-icon"
+        <a href="/html/discover.html" class="nav-icon compass-icon"
           ><img src="/icons/discovericon.png" alt="discover" width="30"
         /></a>
         <a href="#" class="nav-icon messages-icon"
@@ -122,7 +122,7 @@
                   alt="Profile"
                   class="user-avatar"
                 />
-                <span class="username">Rephael Aplacador</span>
+                <span class="username"></span>
               </div>
               <textarea
                 placeholder="What's Recipe is it for today?"
@@ -182,89 +182,67 @@
 
       <div class="preview-modal" style="display: none">
         <div class="previewmodal-content">
-          <div class="previewmodal-header">
-            <div class="previewuser-info">
-              <img
-                src="/icons/Profilepic.png"
-                alt="User Avatar"
-                class="avatar"
-              />
-              <div class="previewuser-details">
-                <h3>Rephael Aplacador</h3>
-                <span class="timestamp">3 mins ago</span>
+          <div class="previewmodal-image">
+            <img src="public/lovable-uploads/4e6c3405-035e-433a-b823-18da60b75555.png" alt="Food preparation" />
+          </div>
+
+          <div class="previewmodal-right">
+            <div class="previewmodal-header">
+              <div class="previewuser-info">
+                <img src="/icons/Profilepic.png" alt="User Avatar" class="avatar" />
+                <div class="previewuser-details">
+                  <h3>Rephael Aplacador</h3>
+                  <span class="timestamp">3 mins ago</span>
+                </div>
               </div>
-              <button
-                class="delete-btn"
-                style="
-                  background: red;
-                  color: white;
-                  padding: 8px;
-                  border: none;
-                  border-radius: 4px;
-                  cursor: pointer;
-                  margin-left: 425px;
-                "
-              >
+              <button class="delete-btn" style="background: red; color: white; padding: 8px; border: none; border-radius: 4px; cursor: pointer;">
                 <i class="fas fa-trash"></i>
               </button>
             </div>
-          </div>
+            <p id="imageCaption" class="caption"></p>
 
-          <div class="previewmodal-image">
-            <img
-              src="public/lovable-uploads/4e6c3405-035e-433a-b823-18da60b75555.png"
-              alt="Food preparation"
-            />
-          </div>
-
-          <div class="previewmodal-footer">
-            <div class="previewaction-buttons">
-              <div class="previewleft-buttons">
-                <button class="previewaction-btn">
-                  <i class="fas fa-utensils"></i>
-                </button>
-                <button class="previewaction-btn">
-                  <i class="fas fa-comment"></i>
-                </button>
-                <button class="previewaction-btn">
-                  <i class="fas fa-share"></i>
+            <!-- Footer Section: Action Buttons, Likes, Comments -->
+            <div class="previewmodal-footer">
+              <div class="previewaction-buttons">
+                <div class="previewleft-buttons">
+                  <button class="previewaction-btn">
+                    <i class="fas fa-utensils"></i>
+                  </button>
+                  <button class="previewaction-btn">
+                    <i class="fas fa-comment"></i>
+                  </button>
+                  <button class="previewaction-btn">
+                    <i class="fas fa-share"></i>
+                  </button>
+                </div>
+                <button class="previewaction-btn bookmark">
+                  <i class="fas fa-bookmark"></i>
                 </button>
               </div>
-              <button class="previewaction-btn bookmark">
-                <i class="fas fa-bookmark"></i>
-              </button>
-            </div>
-            <div class="previewlikes">
-              <div class="previewliked-by">
-                <img
-                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=foodking"
-                  alt="Foodking Avatar"
-                  class="mini-avatar"
-                />
-                <span
-                  >Liked by <strong>foodking</strong> and
-                  <strong>509 others</strong></span
-                >
+              <div class="previewlikes">
+                <div class="previewliked-by">
+                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=foodking" alt="Foodking Avatar" class="mini-avatar" />
+                  <span>
+                    Liked by <strong>foodking</strong> and <strong>509 others</strong>
+                  </span>
+                </div>
               </div>
-            </div>
-            <div class="previewcomment-section">
-              <div class="comment-input">
-                <i class="far fa-smile"></i>
-                <input
-                  type="text"
-                  placeholder="Add a comment..."
-                  class="comment-text-input"
-                />
-                <button class="previewpost-btn">Post</button>
+              <div class="previewcomment-section">
+                <div class="comment-input">
+                  <i class="far fa-smile"></i>
+                  <input type="text" placeholder="Add a comment..." class="comment-text-input" />
+                  <button class="previewpost-btn">Post</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
     </main>
 
     <script src="/scripts/upload.js"></script>
-    <script src="/scripts/photo-grid.js"></script>
+    <!-- <script src="/scripts/photo-grid.js"></script> -->
     <script>
       window.onload = function () {
         const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -272,7 +250,7 @@
         const loginType = localStorage.getItem("loginType");
 
         if (!isLoggedIn || !username) {
-          window.location.href = "index.html";
+          window.location.href = "home.html";
           return;
         }
 
@@ -281,12 +259,6 @@
         document.getElementById("username-display").textContent = displayName;
       };
 
-      // function logout() {
-      //     localStorage.removeItem('isLoggedIn');
-      //     localStorage.removeItem('username');
-      //     localStorage.removeItem('loginType');
-      //     window.location.href = 'index.html';
-      // }
     </script>
     <script src="/scripts/changeprofile.js"></script>
   </body>

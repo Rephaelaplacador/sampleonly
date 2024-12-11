@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BiteShare Profile</title>
+    <link rel="stylesheet" href="/css/discover.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-left">
+        <div class="logo">
+          <img src="/logo/BiteShareLogo.png" alt="BiteShareLogo" width="30" />
+        </div>
+        <input type="search" placeholder="Search..." class="search-input" />
+      </div>
+      <div class="nav-right">
+        <a href="#" class="nav-icon home-icon"
+          ><img src="/icons/homeicon.png" alt="home" width="30"
+        /></a>
+        <a href="/html/profile.html" class="nav-icon compass-icon active"
+          ><img src="/icons/discovericon.png" alt="discover" width="30"
+        /></a>
+        <a href="#" class="nav-icon messages-icon"
+          ><img src="/icons/messageicon.png" alt="message" width="30"
+        /></a>
+        <a href="#" class="nav-icon notifications-icon"
+          ><img src="/icons/notificon.png" alt="notification" width="30"
+        /></a>
+        <a href="/html/profile.html" class="nav-icon profile-icon"
+          ><img src="/icons/profileicon.png" alt="profile" width="30"
+        /></a>
+      </div>
+    </nav>
+
+    <div class="grid" id="exploreGrid"></div>
+
+    <div id="modal">
+      <button class="close-btn" id="closeModal">&times;</button>
+      <div class="modal-content">
+        <!-- Media Section -->
+        <div class="modal-media" id="modalMedia"></div>
+
+        <!-- User Info Section -->
+        <div class="modal-info">
+          <div class="modal-header">
+            <img src="/icons/Profilepic.png" alt="User" />
+            <span id="modalUsername"></span>
+          </div>
+          <div class="modal-actions">
+            <button class="action-btn like-btn">
+              <i class="fas fa-utensils"></i>
+            </button>
+            <button class="action-btn">
+              <i class="fas fa-comment"></i>
+            </button>
+            <button class="action-btn">
+              <i class="fas fa-share"></i>
+            </button>
+            <button class="action-btnbookmark">
+              <i class="fas fa-bookmark"></i>
+            </button>
+          </div>
+          <div class="previewlikes">
+            <div class="previewliked-by">
+              <img
+                src="https://api.dicebear.com/7.x/avataaars/svg?seed=foodking"
+                alt="Foodking Avatar"
+                class="mini-avatar"
+              />
+              <span>
+                Liked by <strong>foodking</strong> and
+                <strong>509 others</strong>
+              </span>
+            </div>
+          </div>
+          <div class="previewcomment-section">
+            <div class="comment-input">
+              <i class="far fa-smile"></i>
+              <input
+                type="text"
+                placeholder="Add a comment..."
+                class="comment-text-input"
+              />
+              <button class="previewpost-btn">Post</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { profiles } from "/scripts/data.js";
+
+      const grid = document.getElementById("exploreGrid");
+      const modal = document.getElementById("modal");
+      const modalMedia = document.getElementById("modalMedia");
+      const modalUsername = document.getElementById("modalUsername");
+      const closeModal = document.getElementById("closeModal");
+      const likedByText = document.querySelector('.previewliked-by span');
+
+      let likesCount = 509; // initial likes count
+      let isLiked = false; // initial like status
+
+      // Create grid items dynamically
+      profiles.forEach((profile) => {
+        const div = document.createElement("div");
+        div.className = "grid-item";
+
+        if (profile.type === "video") {
+          div.innerHTML = `<video src="${profile.mediaUrl}" muted loop></video>`;
+        } else {
+          div.innerHTML = `<img src="${profile.mediaUrl}" alt="${profile.username}">`;
+        }
+
+        div.addEventListener("click", () => {
+          if (profile.type === "video") {
+            modalMedia.innerHTML = `<video src="${profile.mediaUrl}" controls autoplay></video>`;
+          } else {
+            modalMedia.innerHTML = `<img src="${profile.mediaUrl}" alt="${profile.username}">`;
+          }
+
+          modalUsername.textContent = profile.username;
+          modal.classList.add("active");
+        });
+
+        grid.appendChild(div);
+      });
+
+      // Like Button Functionality
+      const likeBtn = document.querySelector(".like-btn");
+      likeBtn.addEventListener("click", function () {
+        isLiked = !isLiked;
+        if (isLiked) {
+          likeBtn.style.color = "#8ab660"; // Change color to red
+          likesCount++;
+          likedByText.innerHTML = `Liked by <strong>you</strong> and <strong>${likesCount} others</strong>`;
+        } else {
+          likeBtn.style.color = "white"; // Reset color to white
+          likesCount--;
+          likedByText.innerHTML = `Liked by <strong>foodking</strong> and <strong>${likesCount} others</strong>`;
+        }
+        console.log("Like button clicked, isLiked:", isLiked, "likesCount:", likesCount);
+      });
+
+      // Bookmark Button Functionality
+      const bookmarkButtonHandler = () => {
+        const bookmarkButton = document.querySelector(".action-btnbookmark");
+        bookmarkButton.classList.toggle("bookmarked");
+
+        isBookmarked = !isBookmarked;
+
+        console.log("Bookmark button clicked");
+      };
+
+      // Open Modal functionality
+      modal.addEventListener("click", (e) => {
+        const target = e.target;
+
+        if (target.classList.contains("fa-utensils")) {
+          likeBtn.click(); // Trigger like button manually
+        }
+
+        if (target.classList.contains("fa-bookmark")) {
+          bookmarkButtonHandler();
+        }
+      });
+
+      // Close modal functionality
+      closeModal.addEventListener("click", () => {
+        modal.classList.remove("active"); // Hide modal
+        const video = modalMedia.querySelector("video");
+        if (video) {
+          video.pause(); // Pause the video when modal is closed
+        }
+      });
+
+      // Close modal when clicking outside of modal content
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.classList.remove("active");
+          const video = modalMedia.querySelector("video");
+          if (video) {
+            video.pause(); // Pause the video when modal is closed
+          }
+        }
+      });
+
+      // Prevent clicks inside the modal content from closing the modal
+      modal.querySelector(".modal-content").addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+    </script>
+  </body>
+</html>

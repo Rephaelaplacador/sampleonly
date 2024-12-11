@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 src: clickedImage.src,
                 username: 'BiteShare',
                 timestamp: '3 mins ago',
-                likes: `Liked by foodking and ${likesCount} others`
+                likes: Liked by foodking and ${likesCount} others
             });
         }
     });
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modalImage.src = imageData.src;
         modalUsername.textContent = imageData.username;
         modalTimestamp.textContent = imageData.timestamp;
-        likedByText.innerHTML = `Liked by <strong>foodking</strong> and <strong>${likesCount} others</strong>`;
+        likedByText.innerHTML = Liked by <strong>foodking</strong> and <strong>${likesCount} others</strong>;
         
         // Show modal with buttons
         previewModal.style.display = 'flex';
@@ -89,11 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if(isLiked) {
             likeBtn.style.color = '#ed4956';
             likesCount++;
-            likedByText.innerHTML = `Liked by <strong>you</strong> and <strong>${likesCount} others</strong>`;
+            likedByText.innerHTML = Liked by <strong>you</strong> and <strong>${likesCount} others</strong>;
         } else {
             likeBtn.style.color = 'white';
             likesCount--;
-            likedByText.innerHTML = `Liked by <strong>foodking</strong> and <strong>${likesCount} others</strong>`;
+            likedByText.innerHTML = Liked by <strong>foodking</strong> and <strong>${likesCount} others</strong>;
         }
         console.log('Like button clicked, isLiked:', isLiked, 'likesCount:', likesCount);
     });
@@ -127,9 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Create new comment element
             const commentDiv = document.createElement('div');
             commentDiv.className = 'preview-comment';
-            commentDiv.innerHTML = `
+            commentDiv.innerHTML = 
                 <strong>BiteShare</strong> ${commentText}
-            `;
+            ;
             
             // Insert comment before the comment input
             const commentSection = document.querySelector('.previewcomment-section');

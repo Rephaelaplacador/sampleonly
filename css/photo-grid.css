@@ -1,242 +1,273 @@
-.photo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
-}
+/* .photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+} */
 
 .grid-photo {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s;
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
 .grid-photo:hover {
-    transform: scale(1.02);
+  transform: scale(1.02);
 }
 
 .preview-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
 .previewmodal-content {
-    background: #2F4F2F;
-    width: 100%;
-    max-width: 600px;
-    border-radius: 12px;
-    overflow: hidden;
-    color: #386641;
-}
-
-.previewmodal-header {
-    padding: 14px 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.previewuser-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-}
-
-.mini-avatar {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    margin-right: 8px;
-}
-
-.previewuser-details h3 {
-    font-size: 14px;
-    font-weight: 600;
-    color: white;
-}
-
-.timestamp {
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.6);
+  background: #2f4f2f;
+  border-radius: 8px;
+  max-height: 90vh;
+  max-width: 935px;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  margin-left: 370px;
+  margin-top: 150px;
 }
 
 .previewmodal-image {
-    width: 100%;
-    position: relative;
-    background: #2F4F2F;
+  width: 100%;
+  position: relative;
+  
 }
 
 .previewmodal-image img {
-    width: 100%;
-    height: auto;
-    display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  /* background-color: #f2e8cf; */
+  object-fit: contain;
+}
+
+.previewmodal-right {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 16px;
+  border-left: 1px solid #f2e8cf;
+  align-items: flex-start;
+}
+
+.previewmodal-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f2e8cf;
+  width: 100%; /* Make header take full width */
+}
+
+.previewuser-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.mini-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.previewuser-details h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color:#f2e8cf;
+}
+
+.timestamp {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .previewmodal-footer {
-    padding: 12px 16px;
-    background: #2F4F2F;
+  padding-top: 12px;
+  padding-bottom: 16px;
+  background: #2f4f2f;
+  width: 100%; /* Make footer take full width */
 }
 
 .previewaction-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-top: 290px;
 }
 
 .previewleft-buttons {
-    display: flex;
-    gap: 16px;
+  display: flex;
+  gap: 16px;
 }
 
 .previewaction-btn {
-    background: none;
-    border: none;
-    padding: 8px;
-    cursor: pointer;
-    font-size: 1.5rem;
-    color: white;
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: white;
 }
 
 .previewaction-btn:hover {
-    color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .bookmark {
-    color: white;
+  color: white;
 }
 
 .previewlikes {
-    margin: 12px 0;
+  margin: 12px 0;
 }
 
 .previewliked-by {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    color: white;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: white;
 }
 
 .previewcomment-section {
-    margin-top: 16px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 16px;
+  margin-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 16px;
 }
 
 .comment-input {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 12px;
-    border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 8px;
 }
 
 .comment-input i {
-    font-size: 24px;
-    color: white;
+  font-size: 24px;
+  color: white;
 }
 
 .comment-text-input {
-    flex: 1;
-    background: none;
-    border: none;
-    outline: none;
-    font-size: 14px;
-    color: white;
-    padding: 8px;
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: white;
+  padding: 8px;
 }
 
 .comment-text-input::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .previewpost-btn {
-    background: none;
-    border: none;
-    color: #4CAF50;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    opacity: 0.3;
-    padding: 8px 16px;
+  background: none;
+  border: none;
+  color: #4caf50;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0.3;
+  padding: 8px 16px;
 }
 
 .previewpost-btn:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 .preview-comment {
-    margin: 8px 0;
-    padding: 4px 12px;
-    font-size: 14px;
-    color: white;
+  margin: 8px 0;
+  padding: 4px 12px;
+  font-size: 14px;
+  color: white;
 }
 
 .preview-comment strong {
-    font-weight: 600;
-    margin-right: 6px;
+  font-weight: 600;
+  margin-right: 6px;
 }
 
 .edit-comment,
 .delete-comment {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.6);
-    cursor: pointer;
-    padding: 0 4px;
-    font-size: 12px;
-    transition: color 0.2s;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 0 4px;
+  font-size: 12px;
+  transition: color 0.2s;
 }
 
 .edit-comment:hover,
 .delete-comment:hover {
-    color: white;
+  color: white;
 }
 
 .edit-comment-input {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
-    color: white;
-    padding: 4px 8px;
-    margin-right: 8px;
-    font-size: 14px;
-    width: calc(100% - 80px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+  margin-right: 8px;
+  font-size: 14px;
+  width: calc(100% - 16px);
 }
 
 .edit-comment-input:focus {
-    outline: none;
-    border-color: rgba(255, 255, 255, 0.4);
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.caption {
+  margin-top: 10px;
+  color: #f2e8cf;
 }
 
 @media (max-width: 640px) {
-    .preview-modal {
-        padding: 0;
-    }
-    
-    .previewmodal-content {
-        height: 100%;
-        border-radius: 0;
-    }
-    
-    .previewmodal-image {
-        flex: 1;
-        display: flex;
-        align-items: center;
-    }
+  .preview-modal {
+    padding: 0;
+  }
+
+  .previewmodal-content {
+    flex-direction: column; /* Stack items vertically for small screens */
+    height: 100%;
+    border-radius: 0;
+  }
+
+  .previewmodal-image {
+    width: 100%; /* Full width on smaller screens */
+  }
+
+  .previewmodal-right {
+    width: 100%; /* Full width on smaller screens */
+    border-left: none; /* Remove border on smaller screens */
+  }
 }

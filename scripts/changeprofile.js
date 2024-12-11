@@ -43,3 +43,19 @@ window.addEventListener('click', (event) => {
     closePhotoModal(); // Close the modal if the backdrop is clicked
   }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const username = localStorage.getItem("username") || "Anonymous";
+  
+  // Update username in profile display
+  const usernameDisplay = document.getElementById("username-display");
+  if (usernameDisplay) {
+    usernameDisplay.textContent = username;
+  }
+  
+  // Update username in upload modal
+  const userInfoUsername = document.querySelector(".user-info .username");
+  if (userInfoUsername) {
+    userInfoUsername.textContent = username;
+  }
+});

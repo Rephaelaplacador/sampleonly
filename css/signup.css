@@ -126,9 +126,8 @@ button:hover {
   text-decoration: underline;
 }
 
-/* Modal Styles */
 .modal {
-  display: none; /* Hidden by default */
+  display: none;
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -173,7 +172,6 @@ button:hover {
   text-decoration: none;
 }
 
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -199,4 +197,32 @@ button:hover {
   .form-box {
     padding: 1.5rem;
   }
+}
+
+#toast {
+  visibility: hidden;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(37, 37, 37, 0.95);
+  color: white;
+  padding: 16px;
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+#toast.show {
+  visibility: visible;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
 }

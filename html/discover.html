@@ -42,23 +42,25 @@
     <div id="modal">
       <button class="close-btn" id="closeModal">&times;</button>
       <div class="modal-content">
-        <!-- Media Section -->
         <div class="modal-media" id="modalMedia"></div>
-
-        <!-- User Info Section -->
         <div class="modal-info">
           <div class="modal-header">
             <img src="/icons/Profilepic.png" alt="User" />
             <span id="modalUsername"></span>
           </div>
+          <div class="comments-section" id="commentsSection" aria-live="polite">
+            <div class="comments-container" id="commentsContainer">
+              <!-- Comments will be inserted here -->
+            </div>
+          </div>
           <div class="modal-actions">
-            <button class="action-btn like-btn">
+            <button class="action-btnlike like-btn">
               <i class="fas fa-utensils"></i>
             </button>
-            <button class="action-btn">
+            <button class="action-btncomment">
               <i class="fas fa-comment"></i>
             </button>
-            <button class="action-btn">
+            <button class="action-btnshare">
               <i class="fas fa-share"></i>
             </button>
             <button class="action-btnbookmark">
@@ -85,8 +87,9 @@
                 type="text"
                 placeholder="Add a comment..."
                 class="comment-text-input"
+                id="commentInput"
               />
-              <button class="previewpost-btn">Post</button>
+              <button class="previewpost-btn" id="postCommentBtn">Post</button>
             </div>
           </div>
         </div>
@@ -101,98 +104,150 @@
       const modalMedia = document.getElementById("modalMedia");
       const modalUsername = document.getElementById("modalUsername");
       const closeModal = document.getElementById("closeModal");
-      const likedByText = document.querySelector('.previewliked-by span');
+      const likedByText = document.querySelector(".previewliked-by span");
+      const commentInput = document.getElementById("commentInput");
+      const postCommentBtn = document.getElementById("postCommentBtn");
+      const commentsContainer = document.getElementById("commentsContainer");
 
-      let likesCount = 509; // initial likes count
-      let isLiked = false; // initial like status
+      const commentsStore = {};
+      const imageStates = {};
 
-      // Create grid items dynamically
+      const loggedInUser = "currentUser";
+
+      function formatTimestamp(date) {
+        const now = new Date();
+        const diff = now - date;
+        const seconds = Math.floor(diff / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+
+        if (days > 0) return `${days}d ago`;
+        if (hours > 0) return `${hours}h ago`;
+        if (minutes > 0) return `${minutes}m ago`;
+        return "just now";
+      }
+
+      function createCommentElement(comment) {
+        const commentDiv = document.createElement("div");
+        commentDiv.className = "comment";
+        commentDiv.innerHTML = `
+    <div class="comment-user">
+      <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${
+        comment.username
+      }" alt="${comment.username} Avatar" class="mini-avatar" />
+      <strong>${comment.username}</strong>
+      <span class="comment-text">${comment.text}</span>
+    </div>
+    <span class="comment-timestamp">${formatTimestamp(comment.timestamp)}</span>
+  `;
+        return commentDiv;
+      }
+
+      function addComment(mediaUrl, text) {
+        if (!loggedInUser) {
+          alert("You must be logged in to comment.");
+          return;
+        }
+
+        if (!commentsStore[mediaUrl]) {
+          commentsStore[mediaUrl] = [];
+        }
+
+        const newComment = {
+          username: loggedInUser,
+          text: text,
+          timestamp: new Date(),
+        };
+
+        commentsStore[mediaUrl].unshift(newComment);
+        commentsContainer.insertBefore(
+          createCommentElement(newComment),
+          commentsContainer.firstChild
+        );
+        commentInput.value = "";
+      }
+
       profiles.forEach((profile) => {
         const div = document.createElement("div");
         div.className = "grid-item";
 
+        commentsStore[profile.mediaUrl] = [];
+
+        imageStates[profile.mediaUrl] = { likesCount: 509, isLiked: false };
+
         if (profile.type === "video") {
           div.innerHTML = `<video src="${profile.mediaUrl}" muted loop></video>`;
         } else {
-          div.innerHTML = `<img src="${profile.mediaUrl}" alt="${profile.username}">`;
+          div.innerHTML = `<img src="${profile.mediaUrl}" alt="${profile.username} media">`;
         }
 
         div.addEventListener("click", () => {
           if (profile.type === "video") {
             modalMedia.innerHTML = `<video src="${profile.mediaUrl}" controls autoplay></video>`;
           } else {
-            modalMedia.innerHTML = `<img src="${profile.mediaUrl}" alt="${profile.username}">`;
+            modalMedia.innerHTML = `<img src="${profile.mediaUrl}" alt="${profile.username} media">`;
           }
 
           modalUsername.textContent = profile.username;
+          const { likesCount, isLiked } = imageStates[profile.mediaUrl];
+
+          commentsContainer.innerHTML = "";
+
+          commentsStore[profile.mediaUrl].forEach((comment) => {
+            commentsContainer.appendChild(createCommentElement(comment));
+          });
+
+          const likeBtn = document.querySelector(".like-btn");
+          likeBtn.style.color = isLiked ? "#8ab660" : "white";
+          likedByText.innerHTML = isLiked
+            ? `Liked by <strong>you</strong> and <strong>${likesCount} others</strong>`
+            : `Liked by <strong>foodking</strong> and <strong>${likesCount} others</strong>`;
+
+          commentInput.dataset.mediaUrl = profile.mediaUrl;
+
+          likeBtn.onclick = () => {
+            imageStates[profile.mediaUrl].isLiked = !isLiked;
+            imageStates[profile.mediaUrl].likesCount += isLiked ? -1 : 1;
+
+            likeBtn.style.color = imageStates[profile.mediaUrl].isLiked
+              ? "#8ab660"
+              : "white";
+            likedByText.innerHTML = imageStates[profile.mediaUrl].isLiked
+              ? `Liked by <strong>you</strong> and <strong>${
+                  imageStates[profile.mediaUrl].likesCount
+                } others</strong>`
+              : `Liked by <strong>foodking</strong> and <strong>${
+                  imageStates[profile.mediaUrl].likesCount
+                } others</strong>`;
+          };
+
           modal.classList.add("active");
         });
 
         grid.appendChild(div);
       });
 
-      // Like Button Functionality
-      const likeBtn = document.querySelector(".like-btn");
-      likeBtn.addEventListener("click", function () {
-        isLiked = !isLiked;
-        if (isLiked) {
-          likeBtn.style.color = "#8ab660"; // Change color to red
-          likesCount++;
-          likedByText.innerHTML = `Liked by <strong>you</strong> and <strong>${likesCount} others</strong>`;
-        } else {
-          likeBtn.style.color = "white"; // Reset color to white
-          likesCount--;
-          likedByText.innerHTML = `Liked by <strong>foodking</strong> and <strong>${likesCount} others</strong>`;
-        }
-        console.log("Like button clicked, isLiked:", isLiked, "likesCount:", likesCount);
-      });
-
-      // Bookmark Button Functionality
-      const bookmarkButtonHandler = () => {
-        const bookmarkButton = document.querySelector(".action-btnbookmark");
-        bookmarkButton.classList.toggle("bookmarked");
-
-        isBookmarked = !isBookmarked;
-
-        console.log("Bookmark button clicked");
-      };
-
-      // Open Modal functionality
-      modal.addEventListener("click", (e) => {
-        const target = e.target;
-
-        if (target.classList.contains("fa-utensils")) {
-          likeBtn.click(); // Trigger like button manually
-        }
-
-        if (target.classList.contains("fa-bookmark")) {
-          bookmarkButtonHandler();
+      postCommentBtn.addEventListener("click", () => {
+        const text = commentInput.value.trim();
+        const mediaUrl = commentInput.dataset.mediaUrl;
+        if (text && mediaUrl) {
+          addComment(mediaUrl, text);
         }
       });
 
-      // Close modal functionality
-      closeModal.addEventListener("click", () => {
-        modal.classList.remove("active"); // Hide modal
-        const video = modalMedia.querySelector("video");
-        if (video) {
-          video.pause(); // Pause the video when modal is closed
-        }
-      });
-
-      // Close modal when clicking outside of modal content
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) {
-          modal.classList.remove("active");
-          const video = modalMedia.querySelector("video");
-          if (video) {
-            video.pause(); // Pause the video when modal is closed
+      commentInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          const text = commentInput.value.trim();
+          const mediaUrl = commentInput.dataset.mediaUrl;
+          if (text && mediaUrl) {
+            addComment(mediaUrl, text);
           }
         }
       });
 
-      // Prevent clicks inside the modal content from closing the modal
-      modal.querySelector(".modal-content").addEventListener("click", (e) => {
-        e.stopPropagation();
+      closeModal.addEventListener("click", () => {
+        modal.classList.remove("active");
       });
     </script>
   </body>

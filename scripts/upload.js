@@ -8,10 +8,10 @@ const firebaseConfig = {
   appId: "1:182207835443:web:76b2b40fd3acd99d66a246",
 };
 
+// Global variables
 let app, storage, db;
 let isUploading = false;
-let likesCount = 509; // initial likes count
-let isLiked = false; // initial like status
+const likeStates = new Map(); // Track likes for each image
 
 // Initialize Firebase after DOM loads
 document.addEventListener("DOMContentLoaded", function () {
@@ -186,7 +186,7 @@ async function handleFinalUpload() {
   }
 }
 
-// Add image to photo grid - remove caption from grid items
+// Add image to photo grid
 function addImageToPhotoGrid(imageUrl, caption) {
   const photoGrid = document.querySelector(".photo-grid");
   const photoItem = document.createElement("div");
@@ -210,81 +210,64 @@ function openPreviewModal(imageUrl, caption) {
   const previewModal = document.querySelector(".preview-modal");
   const previewImage = previewModal.querySelector(".previewmodal-image img");
   const captionElement = previewModal.querySelector("#imageCaption");
-  const likeButton = previewModal.querySelector(".previewaction-btn .fa-utensils");
-  const likesElement = previewModal.querySelector('.previewliked-by strong:last-child');
+  const likedByText = previewModal.querySelector('.previewliked-by span');
   const username = localStorage.getItem("username") || "Anonymous";
-  const commentInput = previewModal.querySelector('.comment-text-input');
-  const postButton = previewModal.querySelector('.previewpost-btn');
 
-  postButton.replaceWith(postButton.cloneNode(true));
-  const newPostButton = previewModal.querySelector('.previewpost-btn');
-
-  newPostButton.addEventListener('click', () => handleCommentSubmit(imageUrl));
-
-  // Add enter key functionality for comment input
-  commentInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleCommentSubmit(imageUrl);
-    }
-  });
-  
-  
-  // Update username in preview modal
-  const userDetailsName = previewModal.querySelector(".previewuser-details h3");
-  if (userDetailsName) {
-    userDetailsName.textContent = username;
+  // Initialize like state for this image if it doesn't exist
+  if (!likeStates.has(imageUrl)) {
+    likeStates.set(imageUrl, {
+      isLiked: false,
+      likesCount: 509
+    });
   }
 
-   // Set image and caption with username
-   previewImage.src = imageUrl;
-   captionElement.innerHTML = `<strong>${username}</strong> ${caption}`;
-   previewModal.style.display = "block";
-   
+  // Get like state for this specific image
+  const likeState = likeStates.get(imageUrl);
 
-  // Initialize like button state
-  const isLiked = localStorage.getItem(`liked_${imageUrl}`) === 'true';
-  if (isLiked) {
-    likeButton.style.color = '#8ab660';
-  } else {
-    likeButton.style.color = 'inherit';
+  // Set image and caption
+  previewImage.src = imageUrl;
+  captionElement.innerHTML = `<strong>${username}</strong> ${caption}`;
+  previewModal.style.display = "block";
+
+  // Load comments for this image
+  loadComments(imageUrl);
+
+  // Like Button Functionality
+  const likeBtn = document.querySelector(".fa-utensils");
+  if (likeBtn) {
+    // Remove existing event listeners
+    const newLikeBtn = likeBtn.cloneNode(true);
+    likeBtn.parentNode.replaceChild(newLikeBtn, likeBtn);
+    
+    // Update initial button state
+    newLikeBtn.style.color = likeState.isLiked ? "#8ab660" : "white";
+    likedByText.innerHTML = likeState.isLiked 
+      ? `Liked by <strong>you</strong> and <strong>${likeState.likesCount} others</strong>`
+      : `Liked by <strong>foodking</strong> and <strong>${likeState.likesCount} others</strong>`;
+    
+    newLikeBtn.addEventListener("click", function() {
+      likeState.isLiked = !likeState.isLiked;
+      if (likeState.isLiked) {
+        newLikeBtn.style.color = "#8ab660";
+        likeState.likesCount++;
+      } else {
+        newLikeBtn.style.color = "white";
+        likeState.likesCount--;
+      }
+      likedByText.innerHTML = likeState.isLiked 
+        ? `Liked by <strong>you</strong> and <strong>${likeState.likesCount} others</strong>`
+        : `Liked by <strong>foodking</strong> and <strong>${likeState.likesCount} others</strong>`;
+      
+      console.log("Like button clicked for image:", imageUrl, "isLiked:", likeState.isLiked, "likesCount:", likeState.likesCount);
+    });
   }
 
-  // Add like button click handler
-  likeButton.parentElement.onclick = function() {
-    const currentlyLiked = localStorage.getItem(`liked_${imageUrl}`) === 'true';
-    const newLikeState = !currentlyLiked;
-    
-    // Update like state
-    localStorage.setItem(`liked_${imageUrl}`, newLikeState);
-    
-    // Update like button appearance
-    if (newLikeState) {
-      likeButton.style.color = '#8ab660';
-      likesCount++;
-    } else {
-      likeButton.style.color = 'inherit';
-      likesCount--;
-    }
-    
-    // Update likes count display
-    const likesElement = previewModal.querySelector('.previewliked-by strong:last-child');
-    likesElement.textContent = `${likesCount} others`;
-  };
 
   // Add delete button handler
   const deleteBtn = previewModal.querySelector(".delete-btn");
   deleteBtn.onclick = () => {
     deleteImageFromFirebase(imageUrl);
     previewModal.style.display = "none";
-
-    // Remove the image from the photo grid
-    const photoItems = document.querySelectorAll(".photo-item");
-    photoItems.forEach((item) => {
-      if (item.querySelector("img").src === imageUrl) {
-        item.remove();
-      }
-    });
   };
 
   // Close modal when clicking outside
@@ -293,33 +276,43 @@ function openPreviewModal(imageUrl, caption) {
       previewModal.style.display = "none";
     }
   };
-}
 
+  // Setup comment submission
+  const commentInput = previewModal.querySelector(".comment-text-input");
+  const postButton = previewModal.querySelector(".previewpost-btn");
+  
+  // Remove existing event listeners
+  const newPostButton = postButton.cloneNode(true);
+  postButton.parentNode.replaceChild(newPostButton, postButton);
+  
+  newPostButton.onclick = () => handleCommentSubmit(imageUrl);
+  
+  commentInput.onkeypress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleCommentSubmit(imageUrl);
+    }
+  };
+}
 // Comment handling functions
 async function handleCommentSubmit(imageUrl) {
-  const commentInput = document.querySelector('.comment-text-input');
+  const commentInput = document.querySelector(".comment-text-input");
   const comment = commentInput.value.trim();
   const username = localStorage.getItem("username") || "Anonymous";
 
   if (!comment) return;
 
   try {
-    // Add comment to Firestore
     const commentData = {
       username: username,
       text: comment,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      imageUrl: imageUrl
+      imageUrl: imageUrl,
     };
 
-    await db.collection('comments').add(commentData);
-
-    // Display the new comment immediately
+    await db.collection("comments").add(commentData);
     displayComment(commentData);
-
-    // Clear input
-    commentInput.value = '';
-
+    commentInput.value = "";
     console.log("Comment added successfully");
   } catch (error) {
     console.error("Error adding comment:", error);
@@ -328,40 +321,37 @@ async function handleCommentSubmit(imageUrl) {
 }
 
 function displayComment(commentData) {
-  const commentsContainer = document.createElement('div');
-  commentsContainer.className = 'comment-container';
-  
-  const commentElement = document.createElement('div');
-  commentElement.className = 'comment';
+  const commentsContainer = document.createElement("div");
+  commentsContainer.className = "comment-container";
+
+  const commentElement = document.createElement("div");
+  commentElement.className = "comment";
   commentElement.innerHTML = `
     <strong>${commentData.username}</strong> ${commentData.text}
     <span class="comment-timestamp">${
-      commentData.timestamp ? new Date(commentData.timestamp.toDate()).toLocaleString() : 'Just now'
+      commentData.timestamp
+        ? new Date(commentData.timestamp.toDate()).toLocaleString()
+        : "Just now"
     }</span>
   `;
-  
+
   commentsContainer.appendChild(commentElement);
-  
-  // Add to comments section in preview modal
-  const commentSection = document.querySelector('.previewcomment-section');
+  const commentSection = document.querySelector(".previewcomment-section");
   commentSection.insertBefore(commentsContainer, commentSection.firstChild);
 }
 
 async function loadComments(imageUrl) {
   try {
     const querySnapshot = await db
-      .collection('comments')
-      .where('imageUrl', '==', imageUrl)
-      .orderBy('timestamp', 'desc')
+      .collection("comments")
+      .where("imageUrl", "==", imageUrl)
+      .orderBy("timestamp", "desc")
       .get();
 
-    // Clear existing comments
-    const commentSection = document.querySelector('.previewcomment-section');
-    const existingComments = commentSection.querySelectorAll('.comment-container');
-    existingComments.forEach(comment => comment.remove());
+    const commentSection = document.querySelector(".previewcomment-section");
+    commentSection.innerHTML = "";
 
-    // Display each comment
-    querySnapshot.forEach(doc => {
+    querySnapshot.forEach((doc) => {
       displayComment(doc.data());
     });
   } catch (error) {
@@ -383,39 +373,17 @@ async function loadImagesFromFirebase() {
       .get();
 
     const photoGrid = document.querySelector(".photo-grid");
-    photoGrid.innerHTML = ""; // Clear existing images
+    photoGrid.innerHTML = "";
 
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      addImageToPhotoGrid(data.image, data.caption); // Add images and captions to the grid
+      addImageToPhotoGrid(data.image, data.caption);
     });
   } catch (error) {
     console.error("Error loading images:", error);
   }
 }
 
-// Bookmark Button Functionality
-const bookmarkButtonHandler = () => {
-  const bookmarkButton = document.querySelector(".action-btnbookmark");
-  bookmarkButton.classList.toggle("bookmarked");
-
-  isBookmarked = !isBookmarked;
-
-  console.log("Bookmark button clicked");
-};
-
-// Open Modal functionality
-modal.addEventListener("click", (e) => {
-  const target = e.target;
-
-  if (target.classList.contains("fa-utensils")) {
-    likeBtn.click(); // Trigger like button manually
-  }
-
-  if (target.classList.contains("fa-bookmark")) {
-    bookmarkButtonHandler();
-  }
-});
 // Delete image from Firebase
 async function deleteImageFromFirebase(imageUrl) {
   if (!storage || !db) {
@@ -439,7 +407,6 @@ async function deleteImageFromFirebase(imageUrl) {
 
     await batch.commit();
 
-    // Remove image from the photo grid
     const photoItems = document.querySelectorAll(".photo-item");
     photoItems.forEach((item) => {
       if (item.querySelector("img").src === imageUrl) {

@@ -34,18 +34,20 @@
 .previewmodal-content {
   background: #2f4f2f;
   border-radius: 8px;
-  max-height: 90vh;
+  max-height: 76vh;
   max-width: 935px;
   display: flex;
   flex-direction: row;
   overflow: hidden;
-  margin-left: 370px;
-  margin-top: 150px;
+  margin-left: 250px;
+  margin-top: 100px;
+  object-fit: contain;
 }
 
 .previewmodal-image {
   width: 100%;
   position: relative;
+  object-fit: contain;
   
 }
 

@@ -86,7 +86,7 @@ body {
 }
 
 .modal-media video {
-  width: 250%;
+  width: 100%;
   object-fit: contain;
 }
 
@@ -142,11 +142,12 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 440px;
-  margin-left: 10px;
+  margin-top: 410px;
+  margin-left: 5px;
+  position: absolute;
 }
 
-.action-btn {
+.action-btnlike {
   background: none;
   border: none;
   cursor: pointer;
@@ -154,6 +155,27 @@ body {
   color: #fff;
   display: flex;
   gap: 16px;
+  position: absolute;
+}
+
+.action-btncomment {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #fff;
+  margin-left: 35px;
+  position: absolute;
+}
+
+.action-btnshare {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #fff;
+  margin-left: 75px;
+  position: absolute;
 }
 
 .action-btnbookmark {
@@ -162,8 +184,10 @@ body {
   cursor: pointer;
   font-size: 24px;
   color: #fff;
-  margin-left: 150px;
+  margin-left: 285px;
 }
+
+
 
 /* Likes Section */
 .likes {
@@ -234,9 +258,41 @@ body {
 }
 
 .previewcomment-section {
-  margin-top: 15px;
+  position: absolute;
+  margin-top: 485px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 16px;
+}
+
+.previewlikes {
+  margin-top: 420px;
+  position: absolute;
+  padding-top: 16px;
+}
+
+.comment-user {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+  color: #f2e8cf;
+}
+
+.comment-user strong {
+  font-weight: bold;
+  margin-right: 5px; 
+}
+
+.comment-text {
+  color: #f2e8cf; 
+}
+
+.comment-timestamp {
+  font-size: 0.7em;
+  color: #888;
+  margin-left: auto; 
+  display: block; 
+  margin-left: 37px;
 }
 
 .previewliked-by {
@@ -258,6 +314,7 @@ body {
 
 .modal-actions button i {
   margin-right: 5px;
+  position: absolute;
 }
 
 .action-btn.liked {
@@ -406,5 +463,23 @@ body {
   .modal-media,
   .modal-info {
     width: 100%;
+  }
+
+  .previewcomment-section {
+    width: 95%;;
+    margin: 16px;
+  }
+
+  .previewliked-by {
+    margin: 16px;
+    
+  }
+
+  .action-btn {
+    margin: 16px;
+  }
+
+  .action-btnbookmark {
+    margin-left: 420px;
   }
 }

@@ -3,30 +3,46 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Up</title>
+    <title>BiteShare Signup</title>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <link rel="stylesheet" href="/css/signup.css" />
   </head>
   <body>
-    <div class="page-logo" alt="BiteShareLogo">
-      <img src="/logo/logogreen.png" width="100" height="100" />
+    <div class="page-logo">
+      <img
+        src="/logo/logogreen.png"
+        alt="BiteShare Logo"
+        width="100"
+        height="100"
+      />
     </div>
+
     <div class="container">
       <div class="form-box">
-        <h1 class="logo"><img src="/logo/bitesharetext.png" width="200" /></h1>
+        <div class="logo">
+          <img src="/logo/bitesharetext.png" alt="BiteShare" width="200" />
+        </div>
         <p class="subtitle">
           Sign up to see Inspiration and Discovery of foods from your friends.
         </p>
 
-        <form>
-          <input type="text" placeholder="Mobile Number or Email" required />
-          <input type="password" placeholder="Password" required />
-          <input type="text" placeholder="Full Name" required />
-          <input type="text" placeholder="Username" required />
-
-          <p class="terms">
-            People who use our service may have uploaded your contact
-            information to BiteShare. <a href="#">Learn More</a>
-          </p>
+        <form id="signup-form">
+          <input
+            type="email"
+            id="email"
+            placeholder="Email or Phone number"
+            required
+          />
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+          <input type="text" id="fullName" placeholder="Full Name" required />
+          <input type="text" id="username" placeholder="Username" required />
 
           <p class="terms">
             By signing up, you agree to our
@@ -46,61 +62,9 @@
       </div>
     </div>
 
-    
-    <div id="terms-modal" class="modal">
-      <div class="modal-content">
-          <span class="close" id="close-terms">&times;</span>
-          <h2>Terms and Conditions</h2>
-          <p>Welcome to Biteshare!</p> 
-          <br>
-            <p>These Terms of Use (or “Terms”) govern your use of Biteshare, except where we expressly state that separate terms (and not these) apply, and provide information about the Biteshare Service (the “Service”), outlined below. When you create a Biteshare account or use Biteshare, you agree to these terms. The Meta Terms of Service do not apply to this Service.</p>
-            <br>
-            <p>The Biteshare Service is one of the Meta Products, provided to you by Meta Platforms, Inc. These Terms of Use therefore constitute an agreement between you and Meta Platforms, Inc.</p>
-            <br>
-            <p>The Biteshare Service
-              We agree to provide you with the Biteshare Service. The Service includes all of the Biteshare products, features, applications, services, technologies, and software that we provide to advance Biteshare's mission: To bring you closer to the people and things you love. The Service is made up of the following aspects:</p>
-            
-              <br>
-            <p>Offering personalized opportunities to create, connect, communicate, discover, and share. People are different. So we offer you different types of accounts and features to help you create, share, grow your presence, and communicate with people on and off Biteshare. We also want to strengthen your relationships through shared experiences that you actually care about. So we build systems that try to understand who and what you and others care about and use that information to help you create, find, join, and share in experiences that matter to you. Part of that is highlighting content, features, offers, and accounts that you might be interested in and offering ways for you to experience Biteshare, based on things that you and others do on and off Biteshare.</p>
-            <br>
-            <p>Fostering a positive, inclusive, and safe environment.
-              We develop and use tools and offer resources to our community members that help to make their experiences positive and inclusive, including when we think they might need help. We also have teams and systems that work to combat abuse and violations of our Terms and policies, as well as harmful and deceptive behavior. We use all the information we have—including your information—to try to keep our platform secure. We also may share information about misuse or harmful content with other Meta Companies or law enforcement. Learn more in the Privacy Policy.</p>
-              <br>
-            <p>Developing and using technologies that help us consistently serve our growing community.
-              Organizing and analyzing information for our growing community is central to our Service. A big part of our Service is creating and using cutting-edge technologies that help us personalize, protect, and improve our Service on an incredibly large scale for a broad global community. Technologies like artificial intelligence and machine learning give us the power to apply complex processes across our Service. Automated technologies also help us ensure the functionality and integrity of our Service.</p>
-              <br>
-            <p>Providing consistent and seamless experiences across other Meta Company Products.
-              Biteshare is part of the Meta Companies, which share technology, systems, insights, and information—including the information we have about you (learn more in the Privacy Policy) in order to provide services that are better, safer, and more secure. We also provide ways to interact across the Meta Company Products that you use and designed systems to achieve a seamless and consistent experience across the Meta Company Products depending on your choices.</p>
-              <br>
-            <p>Ensuring access to our Service.
-              To operate our global Service, we must store and transfer data across our systems around the world, including outside of your country of residence. The use of this global infrastructure is necessary and essential to provide our Service. This infrastructure may be owned or operated by Meta Platforms, Inc., Meta Platforms Ireland Limited, or their affiliates.</p>
-              <br>
-            <p>Connecting you with brands, products, and services in ways you care about.
-              We use data from Biteshare and other Meta Company Products, as well as from third-party partners, to show you ads, offers, and other sponsored content that we believe will be meaningful to you. And we try to make that content as relevant as all your other experiences on Biteshare.</p>
-              <br>
-            <p>Research and innovation.
-              We use the information we have to study our Service and collaborate with others on research to make our Service better and contribute to the well-being of our community.</p>
-      </div>
-    </div>
+    <div class="bottom-line"></div>
+    <div id="toast"></div>
 
-    
-    <div id="privacy-modal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="close-privacy">&times;</span>
-        <h2>Privacy Policy</h2>
-        <p>In the Privacy Policy, we explain how we collect, use, share, retain and transfer information. We also let you know your rights. Each section of this Policy includes helpful examples and simpler language to make our practices easier to understand. We’ve also added links to resources where you can learn more about the privacy topics that interest you.</p>
-      </div>
-    </div>
-
-    
-    <div id="cookies-modal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="close-cookies">&times;</span>
-        <h2>Cookies Policy</h2>
-        <p>Cookies are small pieces of text used to store information on web browsers. Cookies are used to store and receive identifiers and other information on computers, phones and other devices. Other technologies, including data that we store on your web browser or device, identifiers associated with your device and other software, are used for similar purposes. In this policy, we refer to all of these technologies as “cookies”.</p>
-      </div>
-    </div>
-
-    <script src="/scripts/signup.js"></script>
+    <script src="signup.js"></script>
   </body>
 </html>

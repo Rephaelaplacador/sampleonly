@@ -883,12 +883,12 @@ a:-webkit-any-link {
 
 @media (max-width: 768px) {
   .preview-card {
-    width: calc(50% - 10px); /* 2 images per row for smaller screens */
+    width: calc(50% - 10px); 
   }
 }
 
 @media (max-width: 480px) {
   .preview-card {
-    width: 100%; /* 1 image per row for very small screens */
+    width: 100%; 
   }
 }

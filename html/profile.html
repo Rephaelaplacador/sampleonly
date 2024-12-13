@@ -201,6 +201,12 @@
             </div>
             <p id="imageCaption" class="caption"></p>
 
+            <div class="comments-section" id="commentsSection" aria-live="polite">
+              <div class="comments-container" id="commentsContainer">
+                <!-- Comments will be inserted here -->
+              </div>
+            </div>
+
             <!-- Footer Section: Action Buttons, Likes, Comments -->
             <div class="previewmodal-footer">
               <div class="previewaction-buttons">
@@ -209,14 +215,14 @@
                     <i class="fas fa-utensils"></i>
                   </button>
                   <button class="previewaction-btn">
-                    <i class="fas fa-comment"></i>
+                    <i class="fa fa-comment"></i>
                   </button>
                   <button class="previewaction-btn">
-                    <i class="fas fa-share"></i>
+                    <i class="fa fa-share"></i>
                   </button>
                 </div>
                 <button class="previewaction-btn bookmark">
-                  <i class="fas fa-bookmark"></i>
+                  <i class="fa fa-bookmark"></i>
                 </button>
               </div>
               <div class="previewlikes">
@@ -227,6 +233,7 @@
                   </span>
                 </div>
               </div>
+              <div class="comment-container"></div>
               <div class="previewcomment-section">
                 <div class="comment-input">
                   <i class="far fa-smile"></i>
@@ -244,6 +251,7 @@
     <script src="/scripts/upload.js"></script>
     <!-- <script src="/scripts/photo-grid.js"></script> -->
     <script>
+
       window.onload = function () {
         const isLoggedIn = localStorage.getItem("isLoggedIn");
         const username = localStorage.getItem("username");
@@ -258,6 +266,8 @@
         const displayName = loginType === "google" ? username : username;
         document.getElementById("username-display").textContent = displayName;
       };
+
+
 
     </script>
     <script src="/scripts/changeprofile.js"></script>

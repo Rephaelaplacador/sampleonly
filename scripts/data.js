@@ -2,60 +2,73 @@ const profiles = [
     {
         id: 1,
         username: "burger_bae",
-        mediaUrl: "/assets/burger.jpg", 
+        mediaUrl: "/images/burger.jpg", 
         type: "image"
     },
     {
         id: 2,
         username: "sushi_sensation",
-        mediaUrl: "/assets/sushi.jpg", 
+        mediaUrl: "/images/sushi.jpg", 
         type: "image"
     },
     {
         id: 3,
         username: "cake_dreams",
-        mediaUrl: "https://cdn.example.com/videos/chocolate-cake.mp4",
+        mediaUrl: "/images/chocolate_cake.mp4",
+        type: "video"
     },
     {
         id: 4,
         username: "pasta_paradise",
-        mediaUrl: "/assets/pasta.jpg", 
+        mediaUrl: "/images/pasta.jpg", 
         type: "image"
     },
     {
         id: 5,
         username: "coffee_culture",
-        mediaUrl: "https://cdn.example.com/images/coffee.jpg", 
+        mediaUrl: "/images/coffee.jpg", 
         type: "image"
     },
     {
         id: 6,
         username: "smoothie_bowl",
-        mediaUrl: "/assets/smoothie.jpg", 
+        mediaUrl: "/images/smoothie.jpg", 
         type: "image"
     },
     {
         id: 7,
         username: "vegan_vibes",
-        mediaUrl: "/assets/vegan.jpg", 
+        mediaUrl: "/images/vegan_vibes.jpg", 
         type: "image"
     },
     {
         id: 8,
         username: "bbq_boss",
-        mediaUrl: "/assets/bbq.jpg", 
+        mediaUrl: "/images/bbq.jpg", 
         type: "image"
     },
     {
         id: 9,
         username: "sweet_tooth",
-        mediaUrl: "/assets/donuts.jpg", 
+        mediaUrl: "/images/donuts.jpg", 
         type: "image"
     },
     {
         id: 10,
         username: "seafood_soiree",
-        mediaUrl: "/assets/seafood.jpg", 
+        mediaUrl: "/images/seafood.jpg", 
+        type: "image"
+    },
+    {
+        id: 11,
+        username: "foodking",
+        mediaUrl: "/images/random.jpg", 
+        type: "image"
+    },
+    {
+        id: 12,
+        username: "Readywithme",
+        mediaUrl: "/images/ready.jpg", 
         type: "image"
     }
 ];
